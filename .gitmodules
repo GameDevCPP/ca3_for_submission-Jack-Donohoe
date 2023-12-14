@@ -4,3 +4,9 @@
 [submodule "lib/b2d"]
 	path = lib/b2d
 	url = https://github.com/dooglz/Box2D.git
+[submodule "json"]
+	path = json
+	url = https://github.com/nlohmann/json.git
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json.git

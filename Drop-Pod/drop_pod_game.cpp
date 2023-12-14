@@ -1,16 +1,17 @@
 #include "engine.h"
 #include "drop_pod_game.h"
-#include "scenes/scene_menu.h"
 #include <SFML/Graphics.hpp>
 using namespace sf;
 using namespace std;
 
-MenuScene menu;
-SettingsScene settings;
-PlanetLevelScene planetLevel;
 short unsigned switchState;
 int volume;
 Vector2i resolution;
+
+MenuScene menu;
+Level1Scene level1;
+Level2Scene level2;
+Level3Scene level3;
 
 int main() {
 	resolution = Vector2i(1280, 720);
