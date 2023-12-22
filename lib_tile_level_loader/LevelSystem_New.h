@@ -11,7 +11,9 @@
 
 class LevelSystem {
 public:
-  static void loadLevelFile(const std::string&, float tileSize = 100.0f);
+  static std::vector<sf::IntRect> tileImages;
+
+  static void loadTilesetFile(const std::string& path, float tileSize);
   static void loadJsonFile(const std::string&);
   static void unload();
   static void render(sf::RenderWindow& window);
@@ -51,9 +53,12 @@ public:
 
 protected:
   static std::unique_ptr<Tile[]> _tiles;
+  static std::vector<int> _map;
   static size_t _width;
   static size_t _height;
   static sf::Vector2f _offset;
+
+  static sf::Texture _tileset;
 
   static std::vector<std::unique_ptr<sf::RectangleShape>> _sprites;
 

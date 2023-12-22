@@ -3,7 +3,7 @@
 #include "../components/cmp_player_physics.h"
 #include "../drop_pod_game.h"
 #include "../components/cmp_bullet.h"
-#include <LevelSystem.h>
+#include <LevelSystem_New.h>
 #include <iostream>
 using namespace std;
 using namespace sf;
@@ -12,9 +12,7 @@ static shared_ptr<Entity> player;
 
 void Level3Scene::Load() {
   cout << "Scene 3 Load" << endl;
-  ls::loadLevelFile("../../res/levels/level_3.txt", 40.0f);
-  auto ho = Engine::getWindowSize().y - (ls::getHeight() * 40.f);
-  ls::setOffset(Vector2f(0, ho));
+//  ls::loadJsonFile("../../res/levels/Level_2.json");
 
   // Create player
   {

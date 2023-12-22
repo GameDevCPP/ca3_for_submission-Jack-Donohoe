@@ -21,13 +21,40 @@ void LevelSystem::setColor(LevelSystem::Tile t, sf::Color c) {
 }
 
 std::unique_ptr<LevelSystem::Tile[]> LevelSystem::_tiles;
+std::vector<int> LevelSystem::_map;
 size_t LevelSystem::_width;
 size_t LevelSystem::_height;
+sf::Texture LevelSystem::_tileset;
+std::vector<sf::IntRect> LevelSystem::tileImages;
 
 float LevelSystem::_tileSize(100.f);
-Vector2f LevelSystem::_offset(0.0f, 30.0f);
-// Vector2f LevelSystem::_offset(0,0);
+Vector2f LevelSystem::_offset(30.0f, 30.0f);
 vector<std::unique_ptr<sf::RectangleShape>> LevelSystem::_sprites;
+
+void LevelSystem::loadTilesetFile(const std::string& path, float tileSize) {
+    _tileSize = tileSize;
+    size_t w = 0, h = 0;
+
+    // Open tilemap image
+    if (!_tileset.loadFromFile(path)) {
+        throw string("Couldn't open tilemap image: ") + path;
+    }
+
+    // Get tilemap image size
+    w = _tileset.getSize().x / _tileSize;
+    h = _tileset.getSize().y / _tileSize;
+
+    cout << "Tileset: " << path << " loaded. " << w << "x" << h << endl;
+
+    // Create tilemap
+    for (int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            IntRect tileBounds = IntRect(j * _tileSize, i * _tileSize, _tileSize, _tileSize);
+            cout << "Adding Tile: " << tileBounds.left << " "  << tileBounds.top <<endl;
+            tileImages.push_back(tileBounds);
+        }
+    }
+}
 
 void LevelSystem::loadJsonFile(const std::string& path) {
     ifstream json(path);
@@ -35,73 +62,26 @@ void LevelSystem::loadJsonFile(const std::string& path) {
 
     _tileSize = file.at("tilewidth").get<float>();
 
-    vector<int> map = file.at("layers")[0].at("data").get<vector<int>>();
+    _map = file.at("layers")[0].at("data").get<vector<int>>();
 
     _width = file.at("width").get<int>();
     _height = file.at("height").get<int>();
 
     _tiles = std::make_unique<Tile[]>(_width * _height);
 
-    int wall_tiles[] = {1,2,3,4,6,11,12,13,21,22,23,24,26};
+    int wallTiles[] = {4,22,6,13,24,2,26,11,1,3,14};
 
-    for (int i = 0; i < map.size(); i++) {
-        _tiles[i] = map[i];
-        for (int j = 0; j < sizeof(wall_tiles); j++) {
-            if (map[i] == wall_tiles[j]) {
-                _tiles[i] = 1;
+    for (int i = 0; i < _map.size(); i++) {
+        _tiles[i] = _map[i];
+        for (int wallTile : wallTiles){
+            if (_map[i] == wallTile){
+                _tiles[i] = WALL;
             }
         }
     }
 
     cout << "Level " << path << " Loaded. " << _width << "x" << _height << std::endl;
     buildSprites();
-}
-
-void LevelSystem::loadLevelFile(const std::string& path, float tileSize) {
-  _tileSize = tileSize;
-  size_t w = 0, h = 0;
-  string buffer;
-
-  // Load in file to buffer
-  ifstream f(path);
-  if (f.good()) {
-    f.seekg(0, std::ios::end);
-    buffer.resize(f.tellg());
-    f.seekg(0);
-    f.read(&buffer[0], buffer.size());
-    f.close();
-  } else {
-    throw string("Couldn't open level file: ") + path;
-  }
-
-  std::vector<Tile> temp_tiles;
-  int widthCheck = 0;
-  for (int i = 0; i < buffer.size(); ++i) {
-    const char c = buffer[i];
-    if (c == '\0') {  break; }
-    if (c == '\n') { // newline
-      if (w == 0) {  // if we haven't written width yet
-        w = i;       // set width
-      } else if (w != (widthCheck - 1)) {
-        throw string("non uniform width:" + to_string(h) + " ") + path;
-      }
-      widthCheck = 0;
-      h++; // increment height
-    } else {
-      temp_tiles.push_back((Tile)c);
-    }
-    ++widthCheck;
-  }
-
-  if (temp_tiles.size() != (w * h)) {
-    throw string("Can't parse level file") + path;
-  }
-  _tiles = std::make_unique<Tile[]>(w * h);
-  _width = w; // set static class vars
-  _height = h;
-  std::copy(temp_tiles.begin(), temp_tiles.end(), &_tiles[0]);
-  cout << "Level " << path << " Loaded. " << w << "x" << h << std::endl;
-  buildSprites();
 }
 
 void LevelSystem::buildSprites(bool optimise) {
@@ -128,9 +108,21 @@ void LevelSystem::buildSprites(bool optimise) {
     auto s = make_unique<sf::RectangleShape>();
     s->setPosition(t.p);
     s->setSize(t.s);
-    s->setFillColor(Color::Red);
-    s->setFillColor(t.c);
-    // s->setFillColor(Color(rand()%255,rand()%255,rand()%255));
+
+    s->setTexture(&_tileset);
+
+    int xVal = (int) t.p.x/t.s.x;
+    int yVal = (int) t.p.y/t.s.y;
+    int index = _map[(yVal * _width) + xVal] - 1;
+    if (index < 0){
+        //Negative number means not a tile
+        continue;
+    }
+
+    cout << "Index: " << index << endl;
+
+    s->setTextureRect(tileImages[index]);
+
     _sprites.push_back(move(s));
   }
 
