@@ -25,6 +25,7 @@ public:
     START = 70,
     END = 71,
     WALL = 1,
+    GEM = 100,
   };
 
   static Tile getTile(sf::Vector2ul);
@@ -51,6 +52,8 @@ public:
 
   static float getTileSize();
 
+  static void setBackgroundImage(const std::string &path, sf::Vector2f offset, sf::Vector2f scale);
+
 protected:
   static std::unique_ptr<Tile[]> _tiles;
   static std::vector<int> _map;
@@ -59,6 +62,9 @@ protected:
   static sf::Vector2f _offset;
 
   static sf::Texture _tileset;
+
+  static sf::Texture _backgroundTexture;
+  static std::unique_ptr<sf::Sprite> _background;
 
   static std::vector<std::unique_ptr<sf::RectangleShape>> _sprites;
 

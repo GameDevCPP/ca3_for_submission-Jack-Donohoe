@@ -44,6 +44,8 @@ void Level2Scene::Load() {
     // *********************************
   }
 
+  gameView.setSize(300.f, 150.f);
+
   cout << " Scene 2 Load Done" << endl;
   setLoaded(true);
 }
@@ -56,13 +58,15 @@ void Level2Scene::UnLoad() {
 }
 
 void Level2Scene::Update(const double& dt) {
-  Scene::Update(dt);
+  gameView.setCenter(player->getPosition());
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
     Engine::ChangeScene((Scene*)&level3);
   } else if (!player->isAlive()) {
     Engine::ChangeScene((Scene*)&level2);
   }
+  Engine::GetWindow().setView(gameView);
+  Scene::Update(dt);
 }
 
 void Level2Scene::Render() {

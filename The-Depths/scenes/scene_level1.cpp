@@ -15,6 +15,7 @@ void Level1Scene::Load() {
   cout << " Scene 1 Load" << endl;
   ls::loadTilesetFile("../../res/img/Tileset.png", 32.0f);
   ls::loadJsonFile("../../res/levels/Level_1_New.json");
+  ls::setBackgroundImage("res/img/background.jpg", Vector2f(0.f, 0.f), Vector2f(960.f, 640.f));
 
   // Create player
   {
@@ -43,9 +44,7 @@ void Level1Scene::Load() {
     }
   }
 
-  //Simulate long loading times
-  std::this_thread::sleep_for(std::chrono::milliseconds(1500));
-  cout << " Scene 1 Load Done" << endl;
+  gameView.setSize(300.f, 150.f);
 
   setLoaded(true);
 }
@@ -58,9 +57,12 @@ void Level1Scene::UnLoad() {
 }
 
 void Level1Scene::Update(const double& dt) {
+  gameView.setCenter(player->getPosition());
   if (ls::getTileAt(player->getPosition()) == ls::END) {
     Engine::ChangeScene((Scene*)&level2);
   }
+
+  Engine::GetWindow().setView(gameView);
   Scene::Update(dt);
 }
 

@@ -27,6 +27,9 @@ size_t LevelSystem::_height;
 sf::Texture LevelSystem::_tileset;
 std::vector<sf::IntRect> LevelSystem::tileImages;
 
+std::unique_ptr<sf::Sprite> LevelSystem::_background;
+sf::Texture LevelSystem::_backgroundTexture;
+
 float LevelSystem::_tileSize(100.f);
 Vector2f LevelSystem::_offset(30.0f, 30.0f);
 vector<std::unique_ptr<sf::RectangleShape>> LevelSystem::_sprites;
@@ -50,7 +53,6 @@ void LevelSystem::loadTilesetFile(const std::string& path, float tileSize) {
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
             IntRect tileBounds = IntRect(j * _tileSize, i * _tileSize, _tileSize, _tileSize);
-            cout << "Adding Tile: " << tileBounds.left << " "  << tileBounds.top <<endl;
             tileImages.push_back(tileBounds);
         }
     }
@@ -119,8 +121,6 @@ void LevelSystem::buildSprites(bool optimise) {
         continue;
     }
 
-    cout << "Index: " << index << endl;
-
     s->setTextureRect(tileImages[index]);
 
     _sprites.push_back(move(s));
@@ -129,7 +129,19 @@ void LevelSystem::buildSprites(bool optimise) {
   cout << "Level with " << (_width * _height) << " Tiles, using: " << _sprites.size() << " Sprites\n";
 }
 
+void LevelSystem::setBackgroundImage(const std::string &path, sf::Vector2f offset, sf::Vector2f scale) {
+    _backgroundTexture.loadFromFile(path);
+
+    auto s = std::make_unique<sf::Sprite>();
+    s->setTexture(_backgroundTexture);
+    s->setPosition(offset);
+    s->setScale(Vector2f{scale.x / _backgroundTexture.getSize().x, scale.y / _backgroundTexture.getSize().y});
+
+    _background = std::move(s);
+}
+
 void LevelSystem::render(RenderWindow& window) {
+  window.draw(*_background);
   for (auto& t : _sprites) {
     window.draw(*t);
   }

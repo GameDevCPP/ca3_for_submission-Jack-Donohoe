@@ -14,6 +14,12 @@ void Level3Scene::Load() {
   cout << "Scene 3 Load" << endl;
   ls::loadJsonFile("../../res/levels/Level_3.json");
 
+  // set background
+  auto backTexture = Resources::get<Texture>("background.jpg");
+  level_background.setScale(960.f/level_background.getLocalBounds().width, 640.f/level_background.getLocalBounds().height);
+  level_background.setPosition(30.f, 30.f);
+  level_background.setTexture(*backTexture);
+
   // Create player
   {
     // *********************************
@@ -43,6 +49,8 @@ void Level3Scene::Load() {
     // *********************************
   }
 
+  gameView.setSize(300.f, 150.f);
+
   cout << " Scene 3 Load Done" << endl;
   setLoaded(true);
 }
@@ -55,13 +63,15 @@ void Level3Scene::UnLoad() {
 }
 
 void Level3Scene::Update(const double& dt) {
-  Scene::Update(dt);
+  gameView.setCenter(player->getPosition());
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
     Engine::ChangeScene((Scene*)&level1);
   } else if (!player->isAlive()) {
     Engine::ChangeScene((Scene*)&level3);
   }
+  Engine::GetWindow().setView(gameView);
+  Scene::Update(dt);
 }
 
 void Level3Scene::Render() {
