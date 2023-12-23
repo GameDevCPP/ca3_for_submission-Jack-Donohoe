@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include "engine.h"
 
 class Level1Scene : public Scene {
@@ -14,4 +16,8 @@ public:
   void Render() override;
 
   sf::View gameView;
+  sf::Text gemText;
+protected:
+    std::shared_ptr<sf::SoundBuffer> _music;
+    sf::Sound _sound;
 };

@@ -115,3 +115,11 @@ PlayerPhysicsComponent::PlayerPhysicsComponent(Entity* p,
   _body->SetSleepingAllowed(false);
   _body->SetFixedRotation(true);
 }
+
+void PlayerPhysicsComponent::addGem() {
+    _gemCount++;
+}
+
+int PlayerPhysicsComponent::getGemCount() const {
+    return _gemCount;
+}

@@ -99,7 +99,7 @@ void LevelSystem::buildSprites(bool optimise) {
   for (size_t y = 0; y < _height; ++y) {
     for (size_t x = 0; x < _width; ++x) {
       Tile t = getTile({x, y});
-      if (t == EMPTY) {
+      if (t == EMPTY || t == START || t == GEM) {
         continue;
       }
       tps.push_back({getTilePosition({x, y}), tls, getColor(t)});
@@ -111,8 +111,6 @@ void LevelSystem::buildSprites(bool optimise) {
     s->setPosition(t.p);
     s->setSize(t.s);
 
-    s->setTexture(&_tileset);
-
     int xVal = (int) t.p.x/t.s.x;
     int yVal = (int) t.p.y/t.s.y;
     int index = _map[(yVal * _width) + xVal] - 1;
@@ -121,7 +119,13 @@ void LevelSystem::buildSprites(bool optimise) {
         continue;
     }
 
-    s->setTextureRect(tileImages[index]);
+    if (index == 70){
+        //End tiles are not walls, set to black squares to serve as doors
+        s->setFillColor(Color::Black);
+    } else {
+        s->setTexture(&_tileset);
+        s->setTextureRect(tileImages[index]);
+    }
 
     _sprites.push_back(move(s));
   }
