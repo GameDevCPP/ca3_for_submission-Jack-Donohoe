@@ -3,6 +3,7 @@
 #include "../components/cmp_player_physics.h"
 #include "../depths_game.h"
 #include "../components/cmp_bullet.h"
+#include "../components/cmp_gem.h"
 #include <LevelSystem_New.h>
 #include <iostream>
 using namespace std;
@@ -13,12 +14,13 @@ static shared_ptr<Entity> player;
 void Level3Scene::Load() {
   cout << "Scene 3 Load" << endl;
   ls::loadJsonFile("../../res/levels/Level_3.json");
+  ls::setBackgroundImage("res/img/background.jpg", Vector2f(0.f, 0.f), Vector2f(960.f, 640.f));
 
-  // set background
-  auto backTexture = Resources::get<Texture>("background.jpg");
-  level_background.setScale(960.f/level_background.getLocalBounds().width, 640.f/level_background.getLocalBounds().height);
-  level_background.setPosition(30.f, 30.f);
-  level_background.setTexture(*backTexture);
+  _music = Resources::get<sf::SoundBuffer>("music.wav");
+  _sound.setBuffer(*_music);
+  _sound.play();
+  _sound.setLoop(true);
+  _sound.setVolume(15);
 
   // Create player
   {
@@ -49,7 +51,30 @@ void Level3Scene::Load() {
     // *********************************
   }
 
+    // Generate gems for player to pickup
+    {
+        auto gems = ls::findTiles(ls::GEM);
+        auto gemTexture = Resources::get<Texture>("gem.png");
+        for (auto g: gems) {
+            auto pos = ls::getTilePosition(g);
+            pos += Vector2f(8.f, 8.f); //offset to center
+            auto e = makeEntity();
+            e->setPosition(pos);
+
+            auto gem_sprite = e->addComponent<SpriteComponent>();
+            gem_sprite->setTexture(gemTexture);
+            gem_sprite->setTextureRect(IntRect(32, 0, 16, 16));
+
+            e->addComponent<GemComponent>(player);
+        }
+    }
+
   gameView.setSize(300.f, 150.f);
+
+//  auto font = Resources::get<sf::Font>("RobotoMono-Regular.ttf");
+//  gemText.setFont(*font);
+//  gemText.setCharacterSize(10);
+//  gemText.setString("Gems: 0");
 
   cout << " Scene 3 Load Done" << endl;
   setLoaded(true);
@@ -64,6 +89,7 @@ void Level3Scene::UnLoad() {
 
 void Level3Scene::Update(const double& dt) {
   gameView.setCenter(player->getPosition());
+
   const auto pp = player->getPosition();
   if (ls::getTileAt(pp) == ls::END) {
     Engine::ChangeScene((Scene*)&level1);
@@ -71,10 +97,15 @@ void Level3Scene::Update(const double& dt) {
     Engine::ChangeScene((Scene*)&level3);
   }
   Engine::GetWindow().setView(gameView);
+
+//  gemText.setString("Gems: " + to_string(player->get_components<PlayerPhysicsComponent>()[0]->getGemCount()));
+//  gemText.setPosition(gameView.getCenter().x - gameView.getSize().x / 2, gameView.getCenter().y - gameView.getSize().y / 2 );
+
   Scene::Update(dt);
 }
 
 void Level3Scene::Render() {
   ls::render(Engine::GetWindow());
+  Engine::GetWindow().draw(gemText);
   Scene::Render();
 }

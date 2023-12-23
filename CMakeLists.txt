@@ -78,7 +78,8 @@ file(GLOB_RECURSE CMPNTS The-Depths/components/*.cpp The-Depths/components/*.h)
 file(GLOB_RECURSE SCENES The-Depths/scenes/*.cpp The-Depths/scenes/*.h)
 add_executable(The-Depths ${SOURCES} ${RESOURCE_FILES}
         The-Depths/components/cmp_enemy_turret.cpp
-        The-Depths/scenes/scene_menu.h)
+        The-Depths/scenes/scene_menu.h
+        The-Depths/components/cmp_gem.h)
 source_group("components" FILES ${CMPNTS})
 source_group("resources" FILES ${RESOURCE_FILES})
 target_include_directories(The-Depths SYSTEM PRIVATE ${SFML_INCS} ${B2D_INCS} ${JSON_INCS})
