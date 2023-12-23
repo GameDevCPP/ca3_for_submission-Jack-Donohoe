@@ -167,7 +167,7 @@ CMAKE_INSTALL_MANDIR:PATH=
 CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/Drop-Pod
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/The-Depths
 
 //Run-time variable data (LOCALSTATEDIR/run)
 CMAKE_INSTALL_RUNSTATEDIR:PATH=
@@ -226,7 +226,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Drop-Pod
+CMAKE_PROJECT_NAME:STATIC=The-Depths
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=3.11.3
@@ -322,15 +322,6 @@ CMAKE_STRIP:FILEPATH=C:/Program Files/JetBrains/CLion 2023.2.1/bin/mingw/bin/str
 // during the make.  This is useful for debugging only. With Visual
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
-
-//Value Computed by CMake
-Drop-Pod_BINARY_DIR:STATIC=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/cmake-build-debug
-
-//Value Computed by CMake
-Drop-Pod_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-Drop-Pod_SOURCE_DIR:STATIC=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe
 
 //Path to a file.
 FLAC_INCLUDE_DIR:PATH=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/headers
@@ -444,6 +435,15 @@ SFML_USE_STATIC_STD_LIBS:BOOL=FALSE
 
 //TRUE to use system dependencies, FALSE to use the bundled ones.
 SFML_USE_SYSTEM_DEPS:BOOL=FALSE
+
+//Value Computed by CMake
+The-Depths_BINARY_DIR:STATIC=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/cmake-build-debug
+
+//Value Computed by CMake
+The-Depths_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+The-Depths_SOURCE_DIR:STATIC=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe
 
 //Path to a library.
 VORBISENC_LIBRARY:FILEPATH=C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libvorbisenc.a
@@ -724,5 +724,5 @@ VORBIS_LIBRARY-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
 //CMAKE_INSTALL_PREFIX during last run
-_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/Drop-Pod
+_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=C:/Program Files (x86)/The-Depths
 

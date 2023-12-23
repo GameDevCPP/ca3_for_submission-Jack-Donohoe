@@ -37,6 +37,6 @@ This warning is for project developers.  Use -Wno-dev to suppress it.
 -- Found VORBIS: C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libvorbisenc.a;C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libvorbisfile.a;C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libvorbis.a;C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libogg.a  
 -- Found FLAC: C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/sfml/extlibs/libs-mingw/x64/libFLAC.a  
 -- Using the multi-header code from C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/lib/json/include/
--- Configuring done (6.8s)
+-- Configuring done (6.5s)
 -- Generating done (0.1s)
 -- Build files have been written to: C:/Users/jackd/Documents/College/Semester 7/Game Dev C++/ca3_for_submission-Jack-Donohoe/cmake-build-debug

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(Drop-Pod)
+project(The-Depths)
 
 #### Setup Directories ####
 #Main output directory
@@ -18,8 +18,8 @@ add_custom_target(copy_resources ALL COMMAND ${CMAKE_COMMAND}
 )
 
 #if (WIN32 AND BUILD_SHARED_LIBS)
-#    add_custom_command(TARGET Drop_Pod POST_BUILD
-#            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Drop_Pod> $<TARGET_FILE_DIR:Drop_Pod> COMMAND_EXPAND_LISTS)
+#    add_custom_command(TARGET The-Depths POST_BUILD
+#            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:The-Depths> $<TARGET_FILE_DIR:The-Depths> COMMAND_EXPAND_LISTS)
 #endif()
 
 #### Add External Dependencies ####
@@ -71,23 +71,23 @@ target_link_libraries(lib_ecm PRIVATE lib_maths)
 
 ################### Add Practicals Below ##########################
 
-###### Drop-Pod #######
+###### The-Depths #######
 
-file(GLOB_RECURSE SOURCES Drop-Pod/*.cpp Drop-Pod/*.h)
-file(GLOB_RECURSE CMPNTS Drop-Pod/components/*.cpp Drop-Pod/components/*.h)
-file(GLOB_RECURSE SCENES Drop-Pod/scenes/*.cpp Drop-Pod/scenes/*.h)
-add_executable(Drop_Pod ${SOURCES} ${RESOURCE_FILES}
-        Drop-Pod/components/cmp_enemy_turret.cpp
-        Drop-Pod/scenes/scene_menu.h)
+file(GLOB_RECURSE SOURCES The-Depths/*.cpp The-Depths/*.h)
+file(GLOB_RECURSE CMPNTS The-Depths/components/*.cpp The-Depths/components/*.h)
+file(GLOB_RECURSE SCENES The-Depths/scenes/*.cpp The-Depths/scenes/*.h)
+add_executable(The-Depths ${SOURCES} ${RESOURCE_FILES}
+        The-Depths/components/cmp_enemy_turret.cpp
+        The-Depths/scenes/scene_menu.h)
 source_group("components" FILES ${CMPNTS})
 source_group("resources" FILES ${RESOURCE_FILES})
-target_include_directories(Drop_Pod SYSTEM PRIVATE ${SFML_INCS} ${B2D_INCS} ${JSON_INCS})
-target_link_libraries(Drop_Pod lib_engine)
-set(EXECUTABLES ${EXECUTABLES} Drop_Pod)
+target_include_directories(The-Depths SYSTEM PRIVATE ${SFML_INCS} ${B2D_INCS} ${JSON_INCS})
+target_link_libraries(The-Depths lib_engine)
+set(EXECUTABLES ${EXECUTABLES} The-Depths)
 
-add_dependencies(Drop_Pod copy_resources)
+add_dependencies(The-Depths copy_resources)
 
-set_target_properties(Drop_Pod 
+set_target_properties(The-Depths
     PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY
     ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$(Configuration)
 )
